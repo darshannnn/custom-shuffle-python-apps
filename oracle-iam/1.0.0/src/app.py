@@ -58,12 +58,12 @@ class OracleIAM(AppBase):
 
 
     def get_user(self, username, password,  url, userid=""):
-
+	print(f"Trying to call session from {url}")
         session = self.authenticate(username, password, url)
         query_params = {
                 'schemas':['urn:ietf:params:scim:api:messages:2.0:SearchRequest'],  
                 'attributes': [ 'id', 'userName','active','displayName' ],
-                'filter': f'userName eq {username}',
+                'filter': f'userName eq {userid}',
                 'startIndex':1,
                 'count':2,
                 'sortBy': 'userName',
@@ -73,6 +73,7 @@ class OracleIAM(AppBase):
         res = self._http_request('POST',
       
         api_url = f"{url}/iam/governance/scim/v1/Users/.search"
+	print(f"Trying to now get the user details for {userid}")
        
         ret = session.post(api_url, json = query_params)
         return ret.text
