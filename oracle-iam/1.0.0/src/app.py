@@ -61,7 +61,7 @@ class OracleIAM(AppBase):
         session = self.authenticate(username, password, url)
         query_params = {
                 'schemas':['urn:ietf:params:scim:api:messages:2.0:SearchRequest'],  
-                'attributes': [ 'id', 'userName','active','displayName' ],
+                'attributes': [ 'id', 'userName','active','displayName','passwordCreateDate'],
                 'filter': f'userName eq {userid}',
                 'startIndex':1,
                 'count':2,
