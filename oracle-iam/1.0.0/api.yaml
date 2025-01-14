@@ -1,0 +1,74 @@
+walkoff_version: 1.0.0
+app_version: 1.0.0
+name: oracle-iam 
+description: oracle iam app
+tags:
+  - Access 
+  - Users
+categories:
+  - IAM
+contact_info:
+  name: "@darshannnn"
+  url: https://github.com/darshannnn
+  email: "darshan.pradhan@anu.edu.au"
+authentication:
+  required: true
+  parameters:
+    - name: username
+      description: The user to authenticate with
+      multiline: false
+      example: "a123456"
+      required: true
+      schema:
+        type: string
+    - name: password 
+      description: The password for the user to authenticate with
+      multiline: false
+      example: "P@550rd"
+      required: true
+      schema:
+        type: string
+    - name: url 
+      description: url of the Oracle IAM API endpoint
+      multiline: false
+      example: "https://oracle-iam.com.test:14001"
+      required: true
+      schema:
+        type: string
+
+actions:
+  - name: get_user
+    description: Get user details
+    parameters:
+      - name: username
+        description: The user to authenticate with
+        multiline: false
+        example: "a123456"
+        required: true
+        schema:
+          type: string
+      - name: password 
+        description: The password for the user to authenticate with
+        multiline: false
+        example: "P@550rd"
+        required: true
+        schema:
+          type: string
+      - name: url 
+        description: url of the Oracle IAM API endpoint
+        multiline: false
+        example: "https://oracle-iam.com.test:14001"
+        required: true
+        schema:
+          type: string
+      - name: userid
+        description: The user ID to get info for
+        multiline: false
+        example: "u1234567"
+        required: true
+        schema:
+          type: string
+    returns:
+      schema:
+        type: string
+
