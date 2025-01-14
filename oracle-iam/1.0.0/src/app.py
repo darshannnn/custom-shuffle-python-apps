@@ -44,7 +44,7 @@ class OracleIAM(AppBase):
         res = s.post(auth_url, data=auth_data, headers=auth_headers, verify=False)
 
         # Auth failed, raise exception with the response
-        if res.status_code != 200:
+        if res.status_code != 201:
             raise ConnectionError(res.text)
 
         access_token = res.json().get("accessToken")
