@@ -70,12 +70,10 @@ class OracleIAM(AppBase):
                 'sortOrder': 'ascending'
         }
 
-        res = self._http_request('POST',
-      
         api_url = f"{url}/iam/governance/scim/v1/Users/.search"
 	print(f"Trying to now get the user details for {userid}")
        
-        ret = session.post(api_url, json = query_params)
+        ret = session.post(api_url, json=query_params)
         return ret.text
     
 
