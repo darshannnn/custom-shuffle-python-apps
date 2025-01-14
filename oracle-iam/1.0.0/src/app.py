@@ -41,7 +41,7 @@ class OracleIAM(AppBase):
         }
 
         print(f"Making request to: {auth_url}")
-        res = s.post(auth_url, data=auth_data, headers=auth_headers)
+        res = s.post(auth_url, data=auth_data, headers=auth_headers, verify=False)
 
         # Auth failed, raise exception with the response
         if res.status_code != 200:
@@ -69,7 +69,7 @@ class OracleIAM(AppBase):
                 'sortOrder': 'ascending'
         }
         api_url = f"{url}/iam/governance/scim/v1/Users/.search"
-        ret = session.post(api_url, json=query_params)
+        ret = session.post(api_url, json=query_params, verify=False)
         return ret.text
     
 
