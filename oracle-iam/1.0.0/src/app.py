@@ -95,8 +95,27 @@ class OracleIAM(AppBase):
         else:
             return "No user found."
     
-
-    
+    def reset_user_password(self, username, password,  url, userid=""):
+        session = self.authenticate(username, password, url)
+        systemUserID = self.get_user_id(url, session, userid)
+        if systemUserID is not None:
+            api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID}"
+            user_data = {
+                'schemas': ['urn:ietf:params:scim:api:messages:2.0:PatchOp'],
+                'Operations': [
+                        {
+                            'op': 'replace','path': 'urn:ietf:params:scim:schemas:extension:oracle:2.0:IDM:User:passwd',
+                            'value' :
+                            {
+                                'value': f'{password}'
+                            }
+                        }
+                    ]
+                }
+            ret = session.patch(api_url, json=user_data, verify=False)
+            return ret.text
+        else:
+            return "No user found."
 
 # Run the actual thing after we've checked params
 def run(request):
