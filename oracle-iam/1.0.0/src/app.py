@@ -76,7 +76,7 @@ class OracleIAM(AppBase):
         systemUserID = self.get_user_id(url, session, userid)
         api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID}"
         ret = session.get(api_url, verify=False)
-        return ret.text
+        return systemUserID
     
 
     
