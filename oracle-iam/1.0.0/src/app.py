@@ -68,12 +68,13 @@ class OracleIAM(AppBase):
         }
         api_url = f"{url}/iam/governance/scim/v1/Users/.search"
         ret = session.post(api_url, json=query_params, verify=False)
-        return ret
+        systemUserID = json.loads(ret.text)
+        return systemUserID.get(id)
 
     def get_user(self, username, password,  url, userid=""):
         session = self.authenticate(username, password, url)
         systemUserID = self.get_user_id(url, session, userid)
-        api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID['id']}"
+        api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID}"
         ret = session.get(api_url, verify=False)
         return ret.text
     
