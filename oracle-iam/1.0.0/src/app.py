@@ -68,15 +68,21 @@ class OracleIAM(AppBase):
         }
         api_url = f"{url}/iam/governance/scim/v1/Users/.search"
         ret = session.post(api_url, json=query_params, verify=False)
-        systemUserID = json.loads(ret.text)
-        return systemUserID.get("id")
+        ret_json = json.loads(ret.text)
+        if ret_json.get("totalResults") == 1:
+            return ret_json["Resources"][0]["id"]
+        else:
+            return None
 
     def get_user(self, username, password,  url, userid=""):
         session = self.authenticate(username, password, url)
         systemUserID = self.get_user_id(url, session, userid)
-        api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID}"
-        ret = session.get(api_url, verify=False)
-        return ret.text
+        if systemUserID is not None:
+            api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID}"
+            ret = session.get(api_url, verify=False)
+            return ret.text
+        else:
+            return "No user found."
     
 
     
