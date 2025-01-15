@@ -56,12 +56,10 @@ class OracleIAM(AppBase):
             }
         return s
 
-
-    def get_user(self, username, password,  url, userid=""):
-        session = self.authenticate(username, password, url)
+    def get_user_id(self, url, session, userid=""):
         query_params = {
                 'schemas':['urn:ietf:params:scim:api:messages:2.0:SearchRequest'],  
-                'attributes': [ 'id', 'userName','active','displayName','passwordCreateDate'],
+                'attributes': [ 'id', 'userName','active','displayName'],
                 'filter': f'userName eq {userid}',
                 'startIndex':1,
                 'count':2,
@@ -70,7 +68,16 @@ class OracleIAM(AppBase):
         }
         api_url = f"{url}/iam/governance/scim/v1/Users/.search"
         ret = session.post(api_url, json=query_params, verify=False)
+        return ret
+
+    def get_user(self, username, password,  url, userid=""):
+        session = self.authenticate(username, password, url)
+        systemUserID = self.get_user_id(url, session, userid)
+        api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID['id']}"
+        ret = session.get(api_url, verify=False)
         return ret.text
+    
+
     
 
 # Run the actual thing after we've checked params
