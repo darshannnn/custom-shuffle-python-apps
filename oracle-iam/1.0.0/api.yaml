@@ -71,4 +71,38 @@ actions:
     returns:
       schema:
         type: string
+  - name: get_user_passwordCreateDate
+    description: Get user password create date, for verifying if user has reset their password.
+    parameters:
+      - name: username
+        description: The user to authenticate with
+        multiline: false
+        example: "a123456"
+        required: true
+        schema:
+          type: string
+      - name: password 
+        description: The password for the user to authenticate with
+        multiline: false
+        example: "P@550rd"
+        required: true
+        schema:
+          type: string
+      - name: url 
+        description: url of the Oracle IAM API endpoint
+        multiline: false
+        example: "https://oracle-iam.com.test:14001"
+        required: true
+        schema:
+          type: string
+      - name: userid
+        description: The user ID to get password create date for.
+        multiline: false
+        example: "u1234567"
+        required: true
+        schema:
+          type: string
+    returns:
+      schema:
+        type: string
 

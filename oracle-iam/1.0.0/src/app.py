@@ -83,6 +83,17 @@ class OracleIAM(AppBase):
             return ret.text
         else:
             return "No user found."
+        
+    def get_user_passwordCreateDate(self, username, password,  url, userid=""):
+        session = self.authenticate(username, password, url)
+        systemUserID = self.get_user_id(url, session, userid)
+        if systemUserID is not None:
+            api_url = f"{url}/iam/governance/scim/v1/Users/{systemUserID}"
+            ret = session.get(api_url, verify=False)
+            ret_dict = json.loads(ret.text)
+            return ret_dict["urn:ietf:params:scim:schemas:extension:oracle:2.0:OIG:User"]["passwordCreateDate"]
+        else:
+            return "No user found."
     
 
     
