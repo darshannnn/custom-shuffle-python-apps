@@ -136,6 +136,13 @@ actions:
         required: true
         schema:
           type: string
+      - name: userpassword
+        description: New password for the user.
+        multiline: false
+        example: "P@550rd"
+        required: true
+        schema:
+          type: string
     returns:
       schema:
         type: string

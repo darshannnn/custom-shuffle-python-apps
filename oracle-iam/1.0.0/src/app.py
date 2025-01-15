@@ -95,7 +95,7 @@ class OracleIAM(AppBase):
         else:
             return "No user found."
     
-    def reset_user_password(self, username, password,  url, userid=""):
+    def reset_user_password(self, username, password,  url, userid="", userpassword=""):
         session = self.authenticate(username, password, url)
         systemUserID = self.get_user_id(url, session, userid)
         if systemUserID is not None:
@@ -107,7 +107,7 @@ class OracleIAM(AppBase):
                             'op': 'replace','path': 'urn:ietf:params:scim:schemas:extension:oracle:2.0:IDM:User:passwd',
                             'value' :
                             {
-                                'value': f'{password}'
+                                'value': f'{userpassword}'
                             }
                         }
                     ]
